@@ -1,27 +1,68 @@
 #include "minitalk.h"
 
-void	bin_conv(const char x, int pid)
-{
-	int bit;
+t_info info;
 
-	bit = 0b100000000;
-	while (bit != 0)
+void	inv_bin_conv(int x)
+{
+	unsigned char	bit;
+
+	bit = 0b10000000;
+	if (x == SIGUSR2)
+		info.index++;
+	if (x == SIGUSR1)
 	{
-		if ((bit & x))
-			kill(pid, SIGUSR1);
-		else
-			kill(pid, SIGUSR2);
-		bit = bit >> 1;
-		usleep(100);
+		bit = bit >> info.index;
+		info.cha = info.cha | bit;
+		info.index++;
+	}
+}
+
+void	tr_msg(t_info *info)
+{
+	int i;
+
+	pause();
+	if (info->index == 8)
+	{
+		i = 0;
+		while (info->str[i] != 0)
+			i++;
+		info->str[i] = info->cha;
+		if (info->cha == '\0')
+		{
+			ft_putstr_fd(info->str, 1);
+			ft_putchar_fd('\n', 1);
+			i = 0;
+			while (i < 4096)
+			{
+				info->str[i] = 0;
+				i++;
+			}
+		}
+		info->index = 0;
+		info->cha = 0;
 	}
 }
 
 int main(void)
 {
-	pid_t pid;
+	pid_t	pid;
+	int		i;
 
+	info.index = 0;
+	info.cha = 0;
+	i = 0;
+	while (i < 4096)
+	{
+		info.str[i] = 0;
+		i++;
+	}
 	pid = getpid();
 	ft_putnbr_fd(pid, 1);
-	while ()
+	ft_putchar_fd('\n', 1);
+	signal(SIGUSR1, inv_bin_conv);
+	signal(SIGUSR2, inv_bin_conv);
+	while (1)
+		tr_msg(&info);
 	return (0);
 }

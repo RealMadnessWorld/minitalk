@@ -1,10 +1,10 @@
 #include "minitalk.h"
 
-void	bin_conv(const char x, int pid)
+void	bin_conv(unsigned char x, int pid)
 {
-	int bit;
+	unsigned char bit;
 
-	bit = 0b100000000;
+	bit = 0b10000000;
 	while (bit != 0)
 	{
 		if ((bit & x))
@@ -21,9 +21,16 @@ int main(int argc, char **argv)
 	int		pid;
 	char 	*msg;
 
+	if (argc != 3)
+		exit(0);
+	pid = 0;
 	pid = ft_atoi(argv[1]);
 	msg = argv[2];
-	printf("pid %s\n", argv[1]);
-	
+	while (*msg)
+	{
+		bin_conv(*msg, pid);
+		msg++;
+	}
+	bin_conv(0, pid);
 	return(0);
 }
