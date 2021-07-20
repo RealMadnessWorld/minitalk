@@ -47,7 +47,6 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 		exit (0);
-	printf("oi\n");
 	signal(SIGUSR1, confirmation);
 	msg = argv[2];
 	pid_c = getpid();

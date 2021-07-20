@@ -49,7 +49,6 @@ void	guess_who(t_info *info)
 {
 	int i;
 
-	printf("%i\n", info->flag);
 	i = 0;
 	if (info->flag == 0)
 	{
@@ -77,16 +76,12 @@ int	main(void)
 		pause();
 		if (info.index == 8)
 		{
-			printf("str: %s\n", info.str);
 			i = 0;
 			while (info.str[i] != 0)
 				i++;
 			info.str[i] = info.cha;
 			if (info.cha == '\0')
-			{
-				printf("hi\n");
 				guess_who(&info);
-			}
 			info.index = 0;
 			info.cha = 0;
 		}
