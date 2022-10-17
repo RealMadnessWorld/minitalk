@@ -32,7 +32,7 @@ clean:
 	@$(RM) $(OBJS_S)
 	@$(RM) $(OBJSC_B)
 	@$(RM) $(OBJSS_B)
-	@echo "suck my dick"
+	@echo "everything cleaned"
 
 fclean: clean
 	 	@$(RM) $(CLIENT)
